@@ -6,27 +6,46 @@
     {
       "type": "board-esp32-devkit-c-v4",
       "id": "esp",
-      "top": -38.4,
-      "left": 43.24,
+      "top": 0,
+      "left": -4.76,
       "attrs": { "env": "micropython-20231227-v1.22.0" }
     },
-    { "type": "wokwi-ds18b20", "id": "temp1", "top": -135.53, "left": 23.28, "attrs": {} },
+    {
+      "type": "wokwi-lcd1602",
+      "id": "lcd1",
+      "top": 188.8,
+      "left": 130.4,
+      "attrs": { "pins": "i2c" }
+    },
+    {
+      "type": "wokwi-ds18b20",
+      "id": "temp1",
+      "top": -97.13,
+      "left": -24.72,
+      "attrs": { "temperature": "-19.7" }
+    },
     {
       "type": "wokwi-resistor",
       "id": "r1",
-      "top": -72.85,
-      "left": 67.2,
+      "top": -34.45,
+      "left": 19.2,
       "attrs": { "value": "4700" }
     }
   ],
   "connections": [
     [ "esp:TX", "$serialMonitor:RX", "", [] ],
     [ "esp:RX", "$serialMonitor:TX", "", [] ],
-    [ "esp:3V3", "temp1:VCC", "green", [ "h0" ] ],
+    [ "lcd1:GND", "esp:GND.1", "black", [ "h-153.6", "v-86.4" ] ],
+    [ "lcd1:VCC", "esp:5V", "red", [ "h0" ] ],
+    [ "lcd1:SDA", "esp:21", "orange", [ "h-19.2", "v-182.2" ] ],
+    [ "lcd1:SCL", "esp:22", "green", [ "h-9.6", "v-220.5" ] ],
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "esp:3V3", "temp1:VCC", "red", [ "h0" ] ],
     [ "temp1:GND", "esp:GND.1", "black", [ "v0" ] ],
-    [ "temp1:DQ", "esp:21", "orange", [ "v38.4", "h124.8", "v86.4" ] ],
-    [ "esp:3V3", "r1:1", "green", [ "h0.15", "v-67.2" ] ],
-    [ "r1:2", "esp:21", "orange", [ "h46.8", "v105.6" ] ]
+    [ "esp:3V3", "r1:1", "red", [ "h0.15", "v-67.2" ] ],
+    [ "r1:2", "esp:21", "orange", [ "h37.2", "v115.2" ] ],
+    [ "esp:4", "temp1:DQ", "blue", [ "h38.4", "v-153.6", "h-144" ] ]
   ],
   "dependencies": {}
 }
