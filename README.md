@@ -246,6 +246,7 @@ Preencha todas as seções abaixo de forma **clara, objetiva e técnica**.
 
 - **Nome completo: Ana Beatriz Batista Caitano**  
 - **GitHub: https://github.com/bcaitanoo**  
+- **Link do projeto no wokwi:** https://wokwi.com/projects/462233898443166721
 
 ---
 
