@@ -22,13 +22,31 @@ lcd.putstr("Temperatura:")
 lcd.move_to(0, 1)
 lcd.putstr("00.0 C") 
 
+led_azul = Pin(25, Pin.OUT)
+led_verde = Pin(26, Pin.OUT)
+led_vermelho = Pin(27, Pin.OUT)
+
+def definir_leds(temp):
+    if temp < 10:
+        led_azul.value(1)
+        led_verde.value(0)
+        led_vermelho.value(0)
+    elif temp <= 35:
+        led_azul.value(0)
+        led_verde.value(1)
+        led_vermelho.value(0)
+    else:
+        led_azul.value(0)
+        led_verde.value(0)
+        led_vermelho.value(1)
+
 # LOOP PRINCIPAL
 while True :
   ds_sensor.convert_temp() # Conversão da temperatura do sensor 
   time.sleep_ms(750) # Tempo de leitura do sensor
 
   temperatura = ds_sensor.read_temp(sensor_analisado) # Lê temperatura convertida
-  
+  definir_leds(temperatura)
   # Atualiza apenas a segunda linha do display (valor da temperatura) com formatação para evitar residuos
   lcd.move_to(0, 1)
   lcd.putstr("{:<16}".format("{:>5.1f} C".format(temperatura)))
