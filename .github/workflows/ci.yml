@@ -31,4 +31,5 @@ jobs:
       with:
         token: ${{ secrets.WOKWI_API_KEY }}
         path: /
+        expect_text: 'Inicio do programa'
         timeout: 120000
