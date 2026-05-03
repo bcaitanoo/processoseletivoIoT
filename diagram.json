@@ -22,7 +22,7 @@
       "id": "temp1",
       "top": -97.13,
       "left": -24.72,
-      "attrs": { "temperature": "-19.7" }
+      "attrs": { "temperature": "27.3" }
     },
     {
       "type": "wokwi-resistor",
@@ -32,19 +32,32 @@
       "attrs": { "value": "4700" }
     },
     {
-      "type": "wokwi-led",
-      "id": "led1",
-      "top": 15.6,
-      "left": -140.2,
-      "attrs": { "color": "green", "lightColor": "green" }
+      "type": "wokwi-rgb-led",
+      "id": "rgb1",
+      "top": -24.8,
+      "left": -171.7,
+      "attrs": { "common": "cathode" }
     },
-    { "type": "wokwi-led", "id": "led2", "top": 15.6, "left": -82.6, "attrs": { "color": "blue", "lightColor": "blue" } },
     {
-      "type": "wokwi-led",
-      "id": "led3",
-      "top": 15.6,
-      "left": -197.8,
-      "attrs": { "color": "red", "lightColor": "red" }
+      "type": "wokwi-resistor",
+      "id": "r2",
+      "top": 99.95,
+      "left": -134.4,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r3",
+      "top": 109.55,
+      "left": -86.4,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r4",
+      "top": 119.15,
+      "left": -134.4,
+      "attrs": { "value": "220" }
     }
   ],
   "connections": [
@@ -61,12 +74,13 @@
     [ "esp:3V3", "r1:1", "red", [ "h0.15", "v-67.2" ] ],
     [ "esp:4", "temp1:DQ", "gold", [ "h38.4", "v-153.6", "h-144" ] ],
     [ "r1:2", "esp:4", "gold", [ "h66", "v172.8" ] ],
-    [ "led2:A", "esp:25", "red", [ "v38.4" ] ],
-    [ "led1:A", "esp:26", "red", [ "v0" ] ],
-    [ "led3:A", "esp:27", "red", [ "v57.6" ] ],
-    [ "led1:C", "esp:GND.1", "black", [ "v19.2", "h0.4", "v67.2" ] ],
-    [ "led2:C", "esp:GND.1", "black", [ "v9.6", "h0.4", "v57.6", "v19.2" ] ],
-    [ "esp:GND.1", "led3:C", "black", [ "h0" ] ]
+    [ "rgb1:COM", "esp:GND.1", "black", [ "v0" ] ],
+    [ "r2:2", "esp:25", "cyan", [ "v0" ] ],
+    [ "r2:1", "rgb1:B", "cyan", [ "v-86.4" ] ],
+    [ "r3:2", "esp:26", "limegreen", [ "v0" ] ],
+    [ "r3:1", "rgb1:G", "limegreen", [ "h-57.6", "v-96" ] ],
+    [ "r4:2", "esp:27", "red", [ "v0" ] ],
+    [ "r4:1", "rgb1:R", "red", [ "h-28.8", "v-105.6" ] ]
   ],
   "dependencies": {}
 }

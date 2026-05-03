@@ -25,23 +25,22 @@ lcd.putstr("Temperatura:")
 lcd.move_to(0, 1)
 lcd.putstr("00.0 C") 
 
-# CONFIGURAÇÃO DOS LEDS
+# CONFIGURAÇÃO DO LED RBG
+led_azul = Pin(25, Pin.OUT)
+led_verde = Pin(26, Pin.OUT)
+led_vermelho = Pin(27, Pin.OUT)
 
-led_azul = Pin(25, Pin.OUT, Pin.PULL_UP)
-led_verde = Pin(26, Pin.OUT, Pin.PULL_UP)
-led_vermelho = Pin(27, Pin.OUT, Pin.PULL_UP)
-
-# Função responsável por indicar o estado da temperatura via LEDs
+# Função responsável por indicar o estado da temperatura via LED
 def definir_leds(temp):
-    if temp < 10:
+    if temp <= 10: # Temperatura menor ou igual a 10ºC o led fica azul
         led_azul.value(1)
         led_verde.value(0)
         led_vermelho.value(0)
-    elif temp <= 35:
+    elif temp < 30: # Temperatura menor que 30ºC e maior que 10ºC o led fica verde
         led_azul.value(0)
         led_verde.value(1)
         led_vermelho.value(0)
-    else:
+    else: # Temperatura maior ou igual a 30ºC o led fica vermelho
         led_azul.value(0)
         led_verde.value(0)
         led_vermelho.value(1)
@@ -53,7 +52,7 @@ while True :
 
   temperatura = ds_sensor.read_temp(sensor_analisado) # Lê temperatura convertida
   print("Temperatura:", temperatura, "°C")
-  definir_leds(temperatura)  # Atualiza LEDs conforme a temperatura
+  definir_leds(temperatura)  # Atualiza LED conforme a temperatura
 
   # Atualiza apenas a segunda linha do display (valor da temperatura) com formatação para evitar residuos
   lcd.move_to(0, 1)

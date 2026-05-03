@@ -252,9 +252,9 @@ Preencha todas as seções abaixo de forma **clara, objetiva e técnica**.
 
 ## 1️⃣ Visão Geral da Solução
 
-O objetivo do projeto é monitorar a temperatura ambiente utilizando um sensor digital DS18B20 e exibir os dados em um display LCD 16x2, além de fornecer feedback visual por meio de LEDs.
+O objetivo do projeto é monitorar a temperatura ambiente utilizando um sensor digital DS18B20 e exibir os dados em um display LCD 16x2, além de fornecer feedback visual por meio de um LED RGB.
 
-A interação com o usuário ocorre de forma indireta na simulação do Wokwi, onde é possível alterar manualmente a temperatura do sensor. A partir dessa alteração, o sistema responde em tempo real atualizando o display e os LEDs.
+A interação com o usuário ocorre de forma indireta na simulação do Wokwi, onde é possível alterar manualmente a temperatura do sensor. A partir dessa alteração, o sistema responde em tempo real atualizando o display e o LED RGB.
 
 
 ---
@@ -263,21 +263,21 @@ A interação com o usuário ocorre de forma indireta na simulação do Wokwi, o
 
 
 **Fluxo principal do programa (`main.py`):**
-1 - Inicialização dos componentes (sensor, LCD e LEDs)
+1 - Inicialização dos componentes (sensor, LCD e LED RGB)
 2 - Verificação da presença de sensores
 3 - Loop principal:
 - Solicita conversão de temperatura
 - Aguarda o tempo necessário (750ms)
 - Lê a temperatura
 - Classifica o valor
-- Atualiza LEDs e display
+- Atualiza LED RGB e display
 
 
 **Interação entre componentes:**
 - Sensor DS18B20 → fornece dados de temperatura
 - Microcontrolador → processa e decide o estado
 - LCD → exibe informações ao usuário
-- LEDs → indicam visualmente o estado
+- LED RGB → indica visualmente o estado da temperatura por cores
 
 ---
 
@@ -286,9 +286,8 @@ A interação com o usuário ocorre de forma indireta na simulação do Wokwi, o
 - ESP32: Responsável pelo processamento e controle do sistema
 - Sensor DS18B20: Realiza a medição da temperatura via protocolo OneWire
 - Display LCD 16x2 (I2C): Exibe a temperatura e o status do sistema
-- LED Azul: Indica temperatura baixa
-- LED Verde: Indica temperatura normal
-- LED Vermelho: Indica temperatura alta
+- LED RGB: Responsável pelo feedback visual das faixas de temperatura
+
 
 ---
 
@@ -296,6 +295,7 @@ A interação com o usuário ocorre de forma indireta na simulação do Wokwi, o
 
 - Atualização parcial do display para evitar resíduos visuais
 - Uso de temporização (sleep_ms) respeitando o tempo de conversão do DS18B20
+- Substituição de múltiplos LEDs por um único LED RGB, reduzindo uso de pinos e melhorando organização do circuito
 - Classificação da temperatura em faixas para facilitar interpretação
 
 ---
@@ -306,12 +306,12 @@ O sistema funciona de forma contínua e estável, realizando a leitura da temper
 **Funcionalidades implementadas:**
 - Leitura de temperatura com DS18B20
 - Exibição no display LCD
-- Feedback visual com LEDs
+- Feedback visual utilizando LED RGB
 
 **Resultado na simulação (Wokwi):**
 - O usuário pode alterar a temperatura diretamente na interface do Wokwi
 - O valor da temperatura é exibido corretamente no LCD
-- Os LEDs respondem conforme a variação da temperatura
+- O LED RGB altera sua cor conforme a faixa de temperatura
 - O sistema opera em loop contínuo sem falhas
 ---
 
