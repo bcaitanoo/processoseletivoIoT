@@ -256,6 +256,7 @@ O objetivo do projeto é monitorar a temperatura ambiente utilizando um sensor d
 
 A interação com o usuário ocorre de forma indireta na simulação do Wokwi, onde é possível alterar manualmente a temperatura do sensor. A partir dessa alteração, o sistema responde em tempo real atualizando o display e o LED RGB.
 
+O sistema foi desenvolvido utilizando controle de tempo não bloqueante, permitindo que múltiplas tarefas ocorram simultaneamente, como leitura do sensor e controle do LED.
 
 ---
 
@@ -266,17 +267,15 @@ A interação com o usuário ocorre de forma indireta na simulação do Wokwi, o
 1 - Inicialização dos componentes (sensor, LCD e LED RGB)
 2 - Verificação da presença de sensores
 3 - Loop principal:
-- Solicita conversão de temperatura
-- Aguarda o tempo necessário (750ms)
-- Lê a temperatura
-- Classifica o valor
-- Atualiza LED RGB e display
+- Realiza a leitura da temperatura a cada 750 ms
+- Atualiza o display LCD
+- Controla o LED RGB em tempo real
 
 
 **Interação entre componentes:**
 - Sensor DS18B20 → fornece dados de temperatura
-- Microcontrolador → processa e decide o estado
-- LCD → exibe informações ao usuário
+- Microcontrolador → processa os dados e controla saídas
+- LCD → exibe a temperatura formatada
 - LED RGB → indica visualmente o estado da temperatura por cores
 
 ---
@@ -285,7 +284,7 @@ A interação com o usuário ocorre de forma indireta na simulação do Wokwi, o
 
 - ESP32: Responsável pelo processamento e controle do sistema
 - Sensor DS18B20: Realiza a medição da temperatura via protocolo OneWire
-- Display LCD 16x2 (I2C): Exibe a temperatura e o status do sistema
+- Display LCD 16x2 (I2C): Exibição das informações
 - LED RGB: Responsável pelo feedback visual das faixas de temperatura
 
 
@@ -294,9 +293,10 @@ A interação com o usuário ocorre de forma indireta na simulação do Wokwi, o
 ## 4️⃣ Decisões Técnicas Relevantes:
 
 - Atualização parcial do display para evitar resíduos visuais
-- Uso de temporização (sleep_ms) respeitando o tempo de conversão do DS18B20
+- Uso de controle de tempo com time.ticks_ms(), evitando bloqueios no sistema
 - Substituição de múltiplos LEDs por um único LED RGB, reduzindo uso de pinos e melhorando organização do circuito
 - Classificação da temperatura em faixas para facilitar interpretação
+- Implementação de piscar do LED em temperaturas extremas, criando alerta visual
 
 ---
 
@@ -305,22 +305,25 @@ O sistema funciona de forma contínua e estável, realizando a leitura da temper
 
 **Funcionalidades implementadas:**
 - Leitura de temperatura com DS18B20
-- Exibição no display LCD
+- Exibição formatada no display LCD
 - Feedback visual utilizando LED RGB
+- Alerta visual (piscar) em temperaturas extremas
+- Execução não bloqueante do sistema
 
 **Resultado na simulação (Wokwi):**
 - O usuário pode alterar a temperatura diretamente na interface do Wokwi
 - O valor da temperatura é exibido corretamente no LCD
 - O LED RGB altera sua cor conforme a faixa de temperatura
+- Em temperaturas extremas, o LED pisca automaticamente
 - O sistema opera em loop contínuo sem falhas
 ---
 
 ## 6️⃣ Comentários Adicionais:
 
-- Dificuldade encontrada: configuração do Wokwi e uso correto do DS18B20 (OneWire e tempo de conversão).
+- Dificuldade encontrada: configuração do Wokwi, uso correto do DS18B20 (OneWire e tempo de conversão) e implementação de controle não bloqueante.
 - Limitações da solução: restrições do display LCD 16x2.
 - Melhorias futuras: implementar armazenamento de dados, alertas sonoros e melhoria da interface do display.
-- Principais aprendizados durante o desafio: uso de sensores digitais, comunicação I2C, protocolo OneWire e organização de código.
+- Principais aprendizados durante o desafio: uso de time.ticks_ms() para controle de tempo, uso de sensores digitais, comunicação I2C, protocolo OneWire e organização de código.
 
 ---
 
